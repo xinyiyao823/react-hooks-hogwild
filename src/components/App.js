@@ -6,13 +6,30 @@ import Filter from "./Filter";
 
 function App() {
 	const [category, setCategory] = useState("all")
-	console.log(category)
+	
+	function filterGreased(e) {
+		let option = e.target.value;
+		setCategory(option)
+
+	}
+	
+	function filterHogs() {
+		if (category === 'all') {
+			return hogs;
+		} else if (category === 'Greased') {
+			return hogs.filter(hog => hog.greased)
+		} else {
+			return hogs.filter(hog => !hog.greased)
+		}
+	}
+	
+
 
 	return (
 		<div className="App">
 			<Nav />
-			<Filter />
-			<HogTileContainer hogs={hogs} setCategory={setCategory}/>
+			<Filter filterGreased={filterGreased} />
+			<HogTileContainer hogs={filterHogs()} />
 			
 		</div>
 	);
